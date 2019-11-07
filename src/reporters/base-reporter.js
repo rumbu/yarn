@@ -170,7 +170,12 @@ export default class BaseReporter {
   }
 
   checkPeakMemory() {
-    const {heapTotal} = process.memoryUsage();
+    let heapTotal;
+    try {
+        {heapTotal} = process.memoryUsage();
+    } catch(e) {
+        heapTotal = 1000000;
+    }
     if (heapTotal > this.peakMemory) {
       this.peakMemory = heapTotal;
     }
